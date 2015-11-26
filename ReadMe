@@ -1,0 +1,9 @@
+Stefu Teodor 332CC
+
+Pentru a rezolva tema am ales sa imi separ cele doua parti distincte prin 
+doua workpool-uri separate. Astfel pentru inceput creez taskurile de tip Map, le arunc in MapWorkpool, iar apoi pornesc workeri care incep sa rezolve taskuri si sa le puna intr-un Haskmap<String, Vector<MapSolution>>. 
+	Citirea am rezolvat-o in felul urmator: Citesc D bytes de la un StartOffset de inceput, apoi daca primul caracter citit este o litera si offsetul de inceput este mai mare ca 0 ( nu este primul task), ma duc pe pozitia StartOffset - 1, citesc un caracter, iar daca este si el tot litera atunci inseamna ca sunt in cadrul unui cuvant si ii fac discard.
+	In cazul in care ultimul caracter este litera, atunci mai citesc 50 de caractere, iar daca primul caracter citit din cele 50 este tot litera atunci sunt in interiorul unui cuvant si atunci il extrag din cele 50 de caractere citite si il apenduiesc la fragmentul citit initial.
+	MapSolution este o clasa ce reprezinta tipul de data intors de un MapWorker. Dupa ce toate taskurile din MapWorkpool s-au terminat, arunc fiecare intrare din hashmapul cu rezultate in ReduceWorkpool. In cadrul Workerilor de Reduce, dintr-un vector de HashMap-uri ajung la un singur Hashmap<String, MapSolution>, deoarece tipul de data ramane acelasi. Dupa ce ReduceWorkers si-au terminat treaba, am creat sirul lui fibonnaci, iar apoi am calculat pentru fiecare rezultat final, rangul fisierului aferent. In urma unei sortari am afisat rezultatele in fisierul primit ca argument.
+
+
